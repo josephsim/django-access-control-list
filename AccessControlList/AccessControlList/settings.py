@@ -20,17 +20,18 @@ BASE_DIR = Path(__file__).resolve(strict=True).parents[1]
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '5vtf*mmyve=_0wre1cf-sz9&o3e*c(p&nrpl!7p=*s9dy1p8)7'
+SECRET_KEY = 'm_^96onfx2lv=sqdsb7b6&3lx_5*hsmilny9)gb%-=$q@@7&dk'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+# To be changed: ALLOWED_HOSTS = [website ip address]
 
 # Application definition
 
 INSTALLED_APPS = [
+    'aclapp',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -75,8 +76,12 @@ WSGI_APPLICATION = 'AccessControlList.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'access_control_list',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
     }
 }
 
@@ -105,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kuching'
 
 USE_I18N = True
 
