@@ -5,5 +5,5 @@ app_name = 'aclapp'
 urlpatterns = [
     path('', views.index, name='index'),
     path('aclapp/', views.index, name='index'),
-    path('', views.submit, name='submit'),
+    path('submit/', views.submit, name='submit'),
 ]
