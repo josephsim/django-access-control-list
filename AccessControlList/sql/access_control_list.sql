@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 09, 2020 at 08:58 AM
+-- Generation Time: Jan 09, 2020 at 09:47 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -32,22 +32,16 @@ CREATE TABLE `aclapp_accesscontrol` (
   `id` int(11) NOT NULL,
   `uid_index_id` int(11) NOT NULL,
   `uid_uname` varchar(200) NOT NULL,
-  `project_mgmt` longtext DEFAULT NULL,
-  `engagement_mgmt` longtext DEFAULT NULL,
-  `issue_mgmt` longtext DEFAULT NULL,
-  `user_mgmt` longtext DEFAULT NULL,
-  `reporting_mgmt` longtext DEFAULT NULL,
-  `setting` longtext DEFAULT NULL,
-  `audit_log` longtext DEFAULT NULL
+  `permissions` longtext DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `aclapp_accesscontrol`
 --
 
-INSERT INTO `aclapp_accesscontrol` (`id`, `uid_index_id`, `uid_uname`, `project_mgmt`, `engagement_mgmt`, `issue_mgmt`, `user_mgmt`, `reporting_mgmt`, `setting`, `audit_log`) VALUES
-(1, 1, 'josephsim', '[]', '[]', '[\'byPass\']', '[]', '[]', '[]', '[]'),
-(2, 2, 'chooth', '[\'listing\', \'delete\']', '[]', '[]', '[]', '[]', '[\'listing\', \'create\', \'edit\', \'delete\']', '[\'accessLog\']');
+INSERT INTO `aclapp_accesscontrol` (`id`, `uid_index_id`, `uid_uname`, `permissions`) VALUES
+(1, 1, 'josephsim', '[\'project-listing\', \'project-edit\', \'reporting-listing\', \'setting-listing\', \'setting-create\', \'setting-edit\', \'setting-delete\']'),
+(2, 2, 'chooth', '[\'issue-listing\', \'issue-create\', \'issue-editDetail\', \'issue-editReply\', \'issue-delete\', \'issue-byPass\', \'user-listing\', \'user-edit\', \'user-delete\', \'reporting-listing\', \'setting-listing\', \'setting-create\', \'setting-edit\', \'setting-delete\', \'audit-log\']');
 
 -- --------------------------------------------------------
 
@@ -70,7 +64,7 @@ CREATE TABLE `aclapp_userdetail` (
 --
 
 INSERT INTO `aclapp_userdetail` (`id`, `user_id`, `name`, `roles`, `status`, `email`, `section`) VALUES
-(1, 'josephsim', 'Joseph Sim', 'Normal User', 0, 'josephsim@sains.com.my', 'Internal Audit'),
+(1, 'josephsim', 'Joseph Sim', 'Monitor', 0, 'josephsim@sains.com.my', 'Corporate Transformation & Talent Development (CTD)'),
 (2, 'chooth', 'Choo TH', 'Admin', 1, 'chooth@sains.com.my', 'Cyber Security & Digital Infrastructure (CSI)');
 
 -- --------------------------------------------------------
@@ -276,7 +270,8 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (22, 'aclapp', '0005_auto_20200109_1018', '2020-01-09 02:18:41.748986'),
 (23, 'aclapp', '0006_auto_20200109_1023', '2020-01-09 02:23:19.875815'),
 (24, 'aclapp', '0007_auto_20200109_1032', '2020-01-09 02:32:13.963317'),
-(25, 'aclapp', '0008_auto_20200109_1039', '2020-01-09 02:39:31.552088');
+(25, 'aclapp', '0008_auto_20200109_1039', '2020-01-09 02:39:31.552088'),
+(26, 'aclapp', '0009_auto_20200109_1625', '2020-01-09 08:26:07.025895');
 
 -- --------------------------------------------------------
 
@@ -448,7 +443,7 @@ ALTER TABLE `django_content_type`
 -- AUTO_INCREMENT for table `django_migrations`
 --
 ALTER TABLE `django_migrations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- Constraints for dumped tables

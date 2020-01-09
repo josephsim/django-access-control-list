@@ -137,7 +137,7 @@
                                             <div><input class="engagement" value="engagement-listing" name="permissions[]" type="checkbox" id="engagement-listing.{{user.id}}" {% if 'engagement-listing' in user.permissions %} checked {% endif %}> <label for="engagement-listing.{{user.id}}">Listing</label></div>
                                             <div><input class="engagement" value="engagement-create" name="permissions[]" type="checkbox" id="engagement-create.{{user.id}}" {% if 'engagement-create' in user.permissions %} checked {% endif %}> <label for="engagement-create.{{user.id}}">Create</label></div>
                                             <div><input class="engagement" value="engagement-edit" name="permissions[]" type="checkbox" id="engagement-edit.{{user.id}}" {% if 'engagement-edit' in user.permissions %} checked {% endif %}> <label for="engagement-edit.{{user.id}}">Edit</label></div>
-                                            <div><input class="engagement" value="engagement-delete" name="permissions[]" type="checkbox" id="engagement-delete.{{user.id}}" {% if 'engagement-delete' in user.permissions %} checked {% endif %}> <label for="engagement-delete.{{user.id}}"></label>Delete</div> <br/>
+                                            <div><input class="engagement" value="engagement-delete" name="permissions[]" type="checkbox" id="engagement-delete.{{user.id}}" {% if 'engagement-delete' in user.permissions %} checked {% endif %}> <label for="engagement-delete.{{user.id}}">Delete</label></div> <br/>
                                         </div>
             
                                         <div>
@@ -154,8 +154,8 @@
                                         <div>
                                             <label class="form-control acl-label">User Management</label>
                                             <div><input class="user" value="user-listing" name="permissions[]" type="checkbox" id="user-listing.{{user.id}}" {% if 'user-listing' in user.permissions %} checked {% endif %}> <label for="user-listing.{{user.id}}">Listing</label></div>
-                                            <div><input class="user" value="user-edit" name="permissions[]" type="checkbox" id="user-edit.{{user.id}}" {% if 'user-edit' in user.permissions %} checked {% endif %}> <label for="user-edit.{{user.id}}"></label>Edit</div>
-                                            <div><input class="user" value="user-delete" name="permissions[]" type="checkbox" id="user-delete.{{user.id}}" {% if 'user-delete' in user.permissions %} checked {% endif %}> <label for="user-delete.{{user.id}}"></label>Delete</div> <br/>
+                                            <div><input class="user" value="user-edit" name="permissions[]" type="checkbox" id="user-edit.{{user.id}}" {% if 'user-edit' in user.permissions %} checked {% endif %}> <label for="user-edit.{{user.id}}">Edit</label></div>
+                                            <div><input class="user" value="user-delete" name="permissions[]" type="checkbox" id="user-delete.{{user.id}}" {% if 'user-delete' in user.permissions %} checked {% endif %}> <label for="user-delete.{{user.id}}">Delete</label></div> <br/>
                                         </div>
             
                                         <div>
