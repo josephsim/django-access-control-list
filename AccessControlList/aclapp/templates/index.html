@@ -94,16 +94,16 @@
                             <label class="control-label" for="status.{{user.id}}">Status :</label>
                         </div>
                         <div class="col-md-9">
-                            {% if user.status is True %}
+                            {% if user.status == True %}
                             <label for="active.{{user.id}}">Active</label>
                             <input type="radio" name="status" id="active.{{user.id}}" value="1" checked> &nbsp;
                             <label for="inactive.{{user.id}}">Inactive</label> 
                             <input type="radio" name="status" id="inactive.{{user.id}}" value="0"> <br><br>
                             {% else %}
                             <label for="active.{{user.id}}">Active</label>
-                            <input type="radio" name="status" id="active.{{user.id}}" value="1" checked> &nbsp;
+                            <input type="radio" name="status" id="active.{{user.id}}" value="1"> &nbsp;
                             <label for="inactive.{{user.id}}">Inactive</label> 
-                            <input type="radio" name="status" id="inactive.{{user.id}}" value="0"><br><br>
+                            <input type="radio" name="status" id="inactive.{{user.id}}" value="0" checked><br><br>
                             {% endif %}
                         </div> 
 
@@ -124,7 +124,6 @@
                             <label class="control-label" for="acl.{{user.id}}">Access Control List (ACL) : </label>
                         </div>
                     
-                        <!--
                         <div class="col-md-9">
 
                             <div>
@@ -180,7 +179,7 @@
                                 <div><input class="audit" value="accessLog" name="audit[]" type="checkbox" id="audit-log.{{user.id}}"> <label for="audit-log.{{user.id}}">Access Log</label></div>
                             </div>
                         </div>
-                    -->
+
                     </div>
                 </div>
 

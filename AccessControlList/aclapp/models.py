@@ -12,9 +12,16 @@ class UserDetail(models.Model):
         return self.name
 
 class AccessControl(models.Model):
-    user_id = models.ForeignKey(UserDetail, on_delete=models.CASCADE)
-    permissions = models.TextField(default=None, null=True)
-    
+    uid_index = models.ForeignKey(UserDetail, on_delete=models.CASCADE)
+    uid_uname = models.CharField(max_length=200, default=None)
+    project_mgmt = models.TextField(default=None, null=True)
+    engagement_mgmt = models.TextField(default=None, null=True)
+    issue_mgmt = models.TextField(default=None, null=True)
+    user_mgmt = models.TextField(default=None, null=True)
+    reporting_mgmt = models.TextField(default=None, null=True)
+    setting = models.TextField(default=None, null=True)
+    audit_log  = models.TextField(default=None, null=True)
+
     """
     PROJECT_MANAGEMENT = (
             ('Listing', 'Listing'),

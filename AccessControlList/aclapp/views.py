@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
@@ -19,55 +19,29 @@ def index(request):
 
 def submit(request):
     if (request.method == 'POST'):
-        name = request.POST['name']
-        user_id = request.POST['user_id']
-        email = request.POST['email']
-        section = request.POST['section']
-        status = request.POST['status']
-        roles = request.POST['roles']
 
-        user = UserDetail(name=name, user_id=user_id, email=email, section=section, status=status, roles=roles)
-        user.save()
-
-        return redirect('/index.html')
-    else:
-        return redirect('/index.html')
-
-    """
-    user = get_object_or_404(UserDetail, pk=uid)
-
-    try:
-        section = user.choice_set.get(pk=request.POST['section'])
-        status = user.choice_set.get(pk=request.POST['status'])
-        roles = user.choice_set.get(pk=request.POST['roles'])
-
-    except (KeyError, UserDetail.DoesNotExist):
-        return render(request, 'index.html')
-
-    else:
-        selected_choice.votes += 1
-        selected_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,))) 
-    """
-    """
-    if request.method == 'POST':
-        print(request.POST['id'],request.POST['name'])
-        
+        # Variables for UserDetail model
         id = request.POST['id']
         name = request.POST['name']
         user_id = request.POST['user_id']
-        roles = request.POST['roles']
-        status = request.POST['status']
         email = request.POST['email']
         section = request.POST['section']
+        status = request.POST['status']
+        roles = request.POST['roles']
+
+        # Variables for AccessControl model
+        project_mgmt = request.POST.getlist('project[]')
+        engagement_mgmt = request.POST.getlist('engagement[]')
+        issue_mgmt = request.POST.getlist('issue[]')
+        user_mgmt = request.POST.getlist('user[]')
+        reporting_mgmt = request.POST.getlist('reporting[]')
+        setting = request.POST.getlist('setting[]')
+        audit_log = request.POST.getlist('audit[]')
         
-        user = models.UserDetail(id=id, name=name, user_id=user_id, roles=roles, status=status, email=email, section=section)
-        user.save()
-        return render(request,'index.html')
+        UserDetail.objects.filter(pk=id, user_id=user_id).update(name=name, user_id=user_id, email=email, section=section, status=status, roles=roles)
+        AccessControl.objects.filter(uid_uname=user_id).update(project_mgmt=project_mgmt, engagement_mgmt=engagement_mgmt, issue_mgmt=issue_mgmt, 
+        user_mgmt=user_mgmt, reporting_mgmt=reporting_mgmt, setting=setting, audit_log=audit_log)
+
+        return redirect('/')
     else:
-        print('else fail')
-        return render(request,'index.html')
-    """
+        return render(request, 'index.html')
