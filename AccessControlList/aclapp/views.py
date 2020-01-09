@@ -6,12 +6,13 @@ from .models import UserDetail, AccessControl
 
 # Display list of users and their details
 def index(request):
-    users = UserDetail.objects.all()
-    lists = AccessControl.objects.all()
+    #users = UserDetail.objects.all()
+    #lists = AccessControl.objects.all()
+    users = UserDetail.objects.raw('SELECT u.id, u.user_id, u.name, u.roles, u.status, u.email, u.section, a.project_mgmt, a.engagement_mgmt, a.issue_mgmt, a.reporting_mgmt, a.setting, a.audit_log FROM `aclapp_accesscontrol` a JOIN `aclapp_userdetail` u WHERE a.uid_uname = u.user_id')
 
     context = {
         'users': users,
-        'lists': lists,
+        #'lists': lists,
     }
 
     return render(request, 'index.html', context)

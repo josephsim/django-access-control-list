@@ -28,170 +28,175 @@
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{user.id}}">Action</button>
                 </td>
             </tr>
+
+            <!-- Modal here -->
+            
+            <div class="modal fade" id="{{user.id}}">
+                <div class="modal-dialog ">
+                    <div class="modal-content">
+                        <form action="{% url 'aclapp:submit' %}" method="POST">
+                            {% csrf_token %}
+
+                            <!-- Modal Header-->
+                            <div class="modal-header">
+                                <h3>User Detail</h3>
+                                <input type="hidden" name="id" id="id.{{user.id}}" readonly value="{{user.id}}">
+                            </div>
+            
+                            <!-- Modal Body -->
+                            <div class="modal-body">
+                                <div class="row">
+                                    
+                                    <div class="col-md-3">
+                                        <label class="control-label" for="user_id.{{user.id}}">User ID :</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input type="text" name="user_id" id="user_id.{{user.id}}" class="form-control" readonly value="{{user.user_id}}"> <br/>
+                                    </div>
+                                    
+                                    <div class="col-md-3">
+                                        <label class="control-label" for="email.{{user.id}}">Email :</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input type="text" name="email" id="email.{{user.id}}" class="form-control" readonly value="{{user.email}}"> <br/>
+                                    </div> 
+                                    
+                                    <div class="col-md-3">
+                                        <label class="control-label" for="name.{{user.id}}">Name :</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input type="text" name="name" id="name.{{user.id}}" class="form-control" readonly value="{{user.name}}"> <br/>
+                                    </div> 
+            
+                                    <div class="col-md-3">
+                                        <label class="control-label" for="section.{{user.id}}">Section :</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <select class="form-control" name="section" id="section.{{user.id}}">
+                                            <option value="CEO's Office" {% if user.section == 'CEO\'s Office' %} selected {% endif %}>CEO's Office</option>
+                                            <option value="COO's Office" {% if user.section == 'COO\'s Office' %} selected {% endif %}>COO's Office</option>
+                                            <option value="Corporate Transformation & Talent Development (CTD)" {% if user.section == 'Corporate Transformation & Talent Development (CTD)' %} selected {% endif %}>Corporate Transformation & Talent Development (CTD)</option>
+                                            <option value="Customer Relationship Management (CRM)" {% if user.section == 'Customer Relationship Management (CRM)' %} selected {% endif %}>Customer Relationship Management (CRM)</option>
+                                            <option value="Cyber Security & Digital Infrastructure (CSI)" {% if user.section == 'Cyber Security & Digital Infrastructure (CSI)' %} selected {% endif %}>Cyber Security & Digital Infrastructure (CSI)</option>
+                                            <option value="Cyber Security and Digital Infrastructure (CSI - SOC)" {% if user.section == 'Cyber Security and Digital Infrastructure (CSI - SOC)' %} selected {% endif %}>Cyber Security and Digital Infrastructure (CSI - SOC)</option>
+                                            <option value="Data Science & Innovation (DSI)" {% if user.section == 'Data Science & Innovation (DSI)' %} selected {% endif %}>Data Science & Innovation (DSI)</option>
+                                            <option value="Finance & Corporate Services (FCS)" {% if user.section == 'Finance & Corporate Services (FCS)' %} selected {% endif %}>Finance & Corporate Services (FCS)</option>
+                                            <option value="Internal Audit" {% if user.section == 'Internal Audit' %} selected {% endif %}>Internal Audit</option>
+                                            <option value="Operation Services & Management (OSM)" {% if user.section == 'Operation Services & Management (OSM)' %} selected {% endif %}>Operation Services & Management (OSM)</option>
+                                            <option value="Software & Digital Solutions (SDS)" {% if user.section == 'Software & Digital Solutions (SDS)' %} selected {% endif %}>Software & Digital Solutions (SDS)</option>
+                                        </select> <br>
+                                    </div>
+            
+                                    <div class="col-md-3">
+                                        <label class="control-label" for="status.{{user.id}}">Status :</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        {% if user.status == True %}
+                                        <label for="active.{{user.id}}">Active</label>
+                                        <input type="radio" name="status" id="active.{{user.id}}" value="1" checked> &nbsp;
+                                        <label for="inactive.{{user.id}}">Inactive</label> 
+                                        <input type="radio" name="status" id="inactive.{{user.id}}" value="0"> <br><br>
+                                        {% else %}
+                                        <label for="active.{{user.id}}">Active</label>
+                                        <input type="radio" name="status" id="active.{{user.id}}" value="1"> &nbsp;
+                                        <label for="inactive.{{user.id}}">Inactive</label> 
+                                        <input type="radio" name="status" id="inactive.{{user.id}}" value="0" checked><br><br>
+                                        {% endif %}
+                                    </div> 
+            
+                                    <div class="col-md-3">
+                                        <label class="control-label" for="roles.{{user.id}}">Roles :</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <select class="form-control" name="roles" id="roles.{{user.id}}">
+                                            <option value="Admin" {% if user.roles == 'Admin' %} selected {% endif %}>Admin</option>
+                                            <option value="Pentester" {% if user.roles == 'Pentester' %} selected {% endif %}>Pentester</option>
+                                            <option value="Normal User" {% if user.roles == 'Normal User' %} selected {% endif %}>Normal User</option>
+                                            <option value="Monitor" {% if user.roles == 'Monitor' %} selected {% endif %}>Monitor</option>
+                                            <option value="SOC" {% if user.roles == 'SOC' %} selected {% endif %}>SOC</option>
+                                        </select> <br/>
+                                    </div>
+                                    
+                                    <div class="col-md-3">
+                                        <label class="control-label" for="acl.{{user.id}}">Access Control List (ACL) : </label>
+                                    </div>
+                                
+                                    <div class="col-md-9">
+            
+                                        <div>
+                                            <label class="form-control acl-label">Project Management</label>
+                                            <div><input class="project" value="listing" name="project[]" type="checkbox" id="project-listing.{{user.id}}" {% if 'listing' in user.project_mgmt %} checked {% endif %}> <label for="project-listing.{{user.id}}" >Listing</label></div>
+                                            <div><input class="project" value="create" name="project[]" type="checkbox" id="project-create.{{user.id}}" {% if 'create' in user.project_mgmt %} checked {% endif %}> <label for="project-create.{{user.id}}">Create</label></div>
+                                            <div><input class="project" value="edit" name="project[]" type="checkbox" id="project-edit.{{user.id}}" {% if 'edit' in user.project_mgmt %} checked {% endif %}> <label for="project-edit.{{user.id}}">Edit</label></div>
+                                            <div><input class="project" value="delete" name="project[]" type="checkbox" id="project-delete.{{user.id}}" {% if 'delete' in user.project_mgmt %} checked {% endif %}> <label for="project-delete.{{user.id}}">Delete</label></div> <br/>
+                                        </div>
+                                        
+                                        <div>
+                                            <label class="form-control acl-label">Engagement Management</label>
+                                            <div><input class="engagement" value="allListing" name="engagement[]" type="checkbox" id="engagement-allListing.{{user.id}}" {% if 'allListing' in user.engagement_mgmt %} checked {% endif %}> <label for="engagement-allListing.{{user.id}}">All Listing</label> </div>
+                                            <div><input class="engagement" value="listing" name="engagement[]" type="checkbox" id="engagement-listing.{{user.id}}" {% if 'listing' in user.engagement_mgmt %} checked {% endif %}> <label for="engagement-listing.{{user.id}}">Listing</label></div>
+                                            <div><input class="engagement" value="create" name="engagement[]" type="checkbox" id="engagement-create.{{user.id}}" {% if 'create' in user.engagement_mgmt %} checked {% endif %}> <label for="engagement-create.{{user.id}}">Create</label></div>
+                                            <div><input class="engagement" value="edit" name="engagement[]" type="checkbox" id="engagement-edit.{{user.id}}" {% if 'edit' in user.engagement_mgmt %} checked {% endif %}> <label for="engagement-edit.{{user.id}}">Edit</label></div>
+                                            <div><input class="engagement" value="delete" name="engagement[]" type="checkbox" id="engagement-delete.{{user.id}}" {% if 'delete' in user.engagement_mgmt %} checked {% endif %}> <label for="engagement-delete.{{user.id}}"></label>Delete</div> <br/>
+                                        </div>
+            
+                                        <div>
+                                            <label class="form-control acl-label">Issue Management</label>
+                                            <div><input class="issue" value="listing" name="issue[]" type="checkbox" id="issue-listing.{{user.id}}" {% if 'listing' in user.issue_mgmt %} checked {% endif %}> <label for="issue-listing.{{user.id}}">Listing</label></div>
+                                            <div><input class="issue" value="create" name="issue[]" type="checkbox" id="issue-create.{{user.id}}" {% if 'create' in user.issue_mgmt %} checked {% endif %}> <label for="issue-create.{{user.id}}">Create</label></div>
+                                            <div><input class="issue" value="editDetail" name="issue[]" type="checkbox" id="issue-editDetail.{{user.id}}" {% if 'editDetail' in user.issue_mgmt %} checked {% endif %}> <label for="issue-editDetail.{{user.id}}">Edit Detail</label></div>
+                                            <div><input class="issue" value="editReply" name="issue[]" type="checkbox" id="issue-editReply.{{user.id}}" {% if 'editReply' in user.issue_mgmt %} checked {% endif %}> <label for="issue-editReply.{{user.id}}">Edit Reply</label></div>
+                                            <div><input class="issue" value="editDiscussion" name="issue[]" type="checkbox" id="issue-editDiscussion.{{user.id}}" {% if 'editDiscussion' in user.issue_mgmt %} checked {% endif %}> <label for="issue-editDiscussion.{{user.id}}">Edit Discussion</label></div>
+                                            <div><input class="issue" value="delete" name="issue[]" type="checkbox" id="issue-delete.{{user.id}}" {% if 'delete' in user.issue_mgmt %} checked {% endif %}> <label for="issue-delete.{{user.id}}">Delete</label></div>
+                                            <div><input class="issue" value="byPass" name="issue[]" type="checkbox" id="issue-byPass.{{user.id}}" {% if 'byPass' in user.issue_mgmt %} checked {% endif %}> <label for="issue-byPass.{{user.id}}">By Pass</label></div> <br/>
+                                        </div>
+            
+                                        <div>
+                                            <label class="form-control acl-label">User Management</label>
+                                            <div><input class="user" value="listing" name="user[]" type="checkbox" id="user-listing.{{user.id}}" {% if 'listing' in user.user_mgmt %} checked {% endif %}> <label for="user-listing.{{user.id}}">Listing</label></div>
+                                            <div><input class="user" value="edit" name="user[]" type="checkbox" id="user-edit.{{user.id}}" {% if 'edit' in user.user_mgmt %} checked {% endif %}> <label for="user-edit.{{user.id}}"></label>Edit</div>
+                                            <div><input class="user" value="delete" name="user[]" type="checkbox" id="user-delete.{{user.id}}" {% if 'delete' in user.user_mgmt %} checked {% endif %}> <label for="user-delete.{{user.id}}"></label>Delete</div> <br/>
+                                        </div>
+            
+                                        <div>
+                                            <label class="form-control acl-label">Reporting Management</label>
+                                            <div><input class="reporting" value="listing" name="reporting[]" type="checkbox" id="reporting-listing.{{user.id}}" {% if 'listing' in user.reporting_mgmt %} checked {% endif %}> <label for="reporting-listing.{{user.id}}">Listing</label></div> <br/>
+                                        </div>
+            
+                                        <div>
+                                            <label class="form-control acl-label">Setting</label>
+                                            <div><input class="setting" value="listing" name="setting[]" type="checkbox" id="setting-listing.{{user.id}}" {% if 'listing' in user.setting %} checked {% endif %}> <label for="setting-listing.{{user.id}}">Listing</label></div>
+                                            <div><input class="setting" value="create" name="setting[]" type="checkbox" id="setting-create.{{user.id}}" {% if 'create' in user.setting %} checked {% endif %}> <label for="setting-create.{{user.id}}">Create</label></div>
+                                            <div><input class="setting" value="edit" name="setting[]" type="checkbox" id="setting-edit.{{user.id}}" {% if 'edit' in user.setting %} checked {% endif %}> <label for="setting-edit.{{user.id}}">Edit</label></div>
+                                            <div><input class="setting" value="delete" name="setting[]" type="checkbox" id="setting-delete.{{user.id}}" {% if 'delete' in user.setting %} checked {% endif %}> <label for="setting-delete.{{user.id}}">Delete</label></div> <br/>
+                                        </div>
+            
+                                        <div>
+                                            <label class="form-control acl-label">Audit Log</label>  
+                                            <div><input class="audit" value="accessLog" name="audit[]" type="checkbox" id="audit-log.{{user.id}}" {% if 'accessLog' in user.audit_log %} checked {% endif %}> <label for="audit-log.{{user.id}}">Access Log</label></div>
+                                        </div>
+                                    </div>
+            
+                                </div>
+                            </div>
+                            
+                            <!-- Modal Footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button class="btn btn-default btn-primary" type="submit" name="submit" value="Submit">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             {% endfor %}
+            
         </tbody>
     </table>
 {% include 'partials/footer.html' %}
 
-<!-- Modal here -->
-{% for user in users %}
-{% for list in lists %}
-<div class="modal fade" id="{{user.id}}">
-    <div class="modal-dialog ">
-        <div class="modal-content">
-            <form action="{% url 'aclapp:submit' %}" method="POST">
-                {% csrf_token %}
-                <div class="modal-header">
-                    <h3>User Detail</h3>
-                    <input type="hidden" name="id" id="id.{{user.id}}" readonly value="{{user.id}}">
-                </div>
 
-                <div class="modal-body">
-                    
-                    <div class="row">
-                        
-                        <div class="col-md-3">
-                            <label class="control-label" for="user_id.{{user.id}}">User ID :</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="text" name="user_id" id="user_id.{{user.id}}" class="form-control" readonly value="{{user.user_id}}"> <br/>
-                        </div>
-                        
-                        <div class="col-md-3">
-                            <label class="control-label" for="email.{{user.id}}">Email :</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="text" name="email" id="email.{{user.id}}" class="form-control" readonly value="{{user.email}}"> <br/>
-                        </div> 
-                        
-                        <div class="col-md-3">
-                            <label class="control-label" for="name.{{user.id}}">Name :</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="text" name="name" id="name.{{user.id}}" class="form-control" readonly value="{{user.name}}"> <br/>
-                        </div> 
 
-                        <div class="col-md-3">
-                            <label class="control-label" for="section.{{user.id}}">Section :</label>
-                        </div>
-                        <div class="col-md-9">
-                            <select class="form-control" name="section" id="section.{{user.id}}">
-                                <option value="CEO's Office" {% if user.section == 'CEO\'s Office' %} selected {% endif %}>CEO's Office</option>
-                                <option value="COO's Office" {% if user.section == 'COO\'s Office' %} selected {% endif %}>COO's Office</option>
-                                <option value="Corporate Transformation & Talent Development (CTD)" {% if user.section == 'Corporate Transformation & Talent Development (CTD)' %} selected {% endif %}>Corporate Transformation & Talent Development (CTD)</option>
-                                <option value="Customer Relationship Management (CRM)" {% if user.section == 'Customer Relationship Management (CRM)' %} selected {% endif %}>Customer Relationship Management (CRM)</option>
-                                <option value="Cyber Security & Digital Infrastructure (CSI)" {% if user.section == 'Cyber Security & Digital Infrastructure (CSI)' %} selected {% endif %}>Cyber Security & Digital Infrastructure (CSI)</option>
-                                <option value="Cyber Security and Digital Infrastructure (CSI - SOC)" {% if user.section == 'Cyber Security and Digital Infrastructure (CSI - SOC)' %} selected {% endif %}>Cyber Security and Digital Infrastructure (CSI - SOC)</option>
-                                <option value="Data Science & Innovation (DSI)" {% if user.section == 'Data Science & Innovation (DSI)' %} selected {% endif %}>Data Science & Innovation (DSI)</option>
-                                <option value="Finance & Corporate Services (FCS)" {% if user.section == 'Finance & Corporate Services (FCS)' %} selected {% endif %}>Finance & Corporate Services (FCS)</option>
-                                <option value="Internal Audit" {% if user.section == 'Internal Audit' %} selected {% endif %}>Internal Audit</option>
-                                <option value="Operation Services & Management (OSM)" {% if user.section == 'Operation Services & Management (OSM)' %} selected {% endif %}>Operation Services & Management (OSM)</option>
-                                <option value="Software & Digital Solutions (SDS)" {% if user.section == 'Software & Digital Solutions (SDS)' %} selected {% endif %}>Software & Digital Solutions (SDS)</option>
-                            </select> <br>
-                        </div>
-
-                        <div class="col-md-3">
-                            <label class="control-label" for="status.{{user.id}}">Status :</label>
-                        </div>
-                        <div class="col-md-9">
-                            {% if user.status == True %}
-                            <label for="active.{{user.id}}">Active</label>
-                            <input type="radio" name="status" id="active.{{user.id}}" value="1" checked> &nbsp;
-                            <label for="inactive.{{user.id}}">Inactive</label> 
-                            <input type="radio" name="status" id="inactive.{{user.id}}" value="0"> <br><br>
-                            {% else %}
-                            <label for="active.{{user.id}}">Active</label>
-                            <input type="radio" name="status" id="active.{{user.id}}" value="1"> &nbsp;
-                            <label for="inactive.{{user.id}}">Inactive</label> 
-                            <input type="radio" name="status" id="inactive.{{user.id}}" value="0" checked><br><br>
-                            {% endif %}
-                        </div> 
-
-                        <div class="col-md-3">
-                            <label class="control-label" for="roles.{{user.id}}">Roles :</label>
-                        </div>
-                        <div class="col-md-9">
-                            <select class="form-control" name="roles" id="roles.{{user.id}}">
-                                <option value="Admin" {% if user.roles == 'Admin' %} selected {% endif %}>Admin</option>
-                                <option value="Pentester" {% if user.roles == 'Pentester' %} selected {% endif %}>Pentester</option>
-                                <option value="Normal User" {% if user.roles == 'Normal User' %} selected {% endif %}>Normal User</option>
-                                <option value="Monitor" {% if user.roles == 'Monitor' %} selected {% endif %}>Monitor</option>
-                                <option value="SOC" {% if user.roles == 'SOC' %} selected {% endif %}>SOC</option>
-                            </select> <br/>
-                        </div>
-                        
-                        <div class="col-md-3">
-                            <label class="control-label" for="acl.{{user.id}}">Access Control List (ACL) : </label>
-                        </div>
-                    
-                        <div class="col-md-9">
-
-                            <div>
-                                <label class="form-control acl-label">Project Management</label>
-                                <div><input class="project" value="listing" name="project[]" type="checkbox" id="project-listing.{{user.id}}"> <label for="project-listing.{{user.id}}">Listing</label></div>
-                                <div><input class="project" value="create" name="project[]" type="checkbox" id="project-create.{{user.id}}"> <label for="project-create.{{user.id}}">Create</label></div>
-                                <div><input class="project" value="edit" name="project[]" type="checkbox" id="project-edit.{{user.id}}"> <label for="project-edit.{{user.id}}">Edit</label></div>
-                                <div><input class="project" value="delete" name="project[]" type="checkbox" id="project-delete.{{user.id}}"> <label for="project-delete.{{user.id}}">Delete</label></div> <br/>
-                            </div>
-                            
-                            <div>
-                                <label class="form-control acl-label">Engagement Management</label>
-                                <div><input class="engagement" value="allListing" name="engagement[]" type="checkbox" id="engagement-allListing.{{user.id}}"> <label for="engagement-allListing.{{user.id}}">All Listing</label> </div>
-                                <div><input class="engagement" value="listing" name="engagement[]" type="checkbox" id="engagement-listing.{{user.id}}"> <label for="engagement-listing.{{user.id}}">Listing</label></div>
-                                <div><input class="engagement" value="create" name="engagement[]" type="checkbox" id="engagement-create.{{user.id}}"> <label for="engagement-create.{{user.id}}">Create</label></div>
-                                <div><input class="engagement" value="create" name="engagement[]" type="checkbox" id="engagement-edit.{{user.id}}"> <label for="engagement-edit.{{user.id}}">Edit</label></div>
-                                <div><input class="engagement" value="delete" name="engagement[]" type="checkbox" id="engagement-delete.{{user.id}}"> <label for="engagement-delete.{{user.id}}"></label>Delete</div> <br/>
-                            </div>
-
-                            <div>
-                                <label class="form-control acl-label">Issue Management</label>
-                                <div><input class="issue" value="listing" name="issue[]" type="checkbox" id="issue-listing.{{user.id}}"> <label for="issue-listing.{{user.id}}">Listing</label></div>
-                                <div><input class="issue" value="create" name="issue[]" type="checkbox" id="issue-create.{{user.id}}"> <label for="issue-create.{{user.id}}">Create</label></div>
-                                <div><input class="issue" value="editDetail" name="issue[]" type="checkbox" id="issue-editDetail.{{user.id}}"> <label for="issue-editDetail.{{user.id}}">Edit Detail</label></div>
-                                <div><input class="issue" value="editReply" name="issue[]" type="checkbox" id="issue-editReply.{{user.id}}"> <label for="issue-editReply.{{user.id}}">Edit Reply</label></div>
-                                <div><input class="issue" value="editDiscussion" name="issue[]" type="checkbox" id="issue-editDiscussion.{{user.id}}"> <label for="issue-editDiscussion.{{user.id}}">Edit Discussion</label></div>
-                                <div><input class="issue" value="delete" name="issue[]" type="checkbox" id="issue-delete.{{user.id}}"> <label for="issue-delete.{{user.id}}">Delete</label></div>
-                                <div><input class="issue" value="byPass" name="issue[]" type="checkbox" id="issue-byPass.{{user.id}}"> <label for="issue-byPass.{{user.id}}">By Pass</label></div> <br/>
-                            </div>
-
-                            <div>
-                                <label class="form-control acl-label">User Management</label>
-                                <div><input class="user" value="listing" name="user[]" type="checkbox" id="user-listing.{{user.id}}"> <label for="user-listing.{{user.id}}">Listing</label></div>
-                                <div><input class="user" value="edit" name="user[]" type="checkbox" id="user-edit.{{user.id}}"> <label for="user-edit.{{user.id}}"></label>Edit</div>
-                                <div><input class="user" value="delete" name="user[]" type="checkbox" id="user-delete.{{user.id}}"> <label for="user-delete.{{user.id}}"></label>Delete</div> <br/>
-                            </div>
-
-                            <div>
-                                <label class="form-control acl-label">Reporting Management</label>
-                                <div><input class="reporting" value="listing" name="reporting[]" type="checkbox" id="reporting-listing.{{user.id}}"> <label for="reporting-listing.{{user.id}}">Listing</label></div> <br/>
-                            </div>
-
-                            <div>
-                                <label class="form-control acl-label">Setting</label>
-                                <div><input class="setting" value="listing" name="setting[]" type="checkbox" id="setting-listing.{{user.id}}"> <label for="setting-listing.{{user.id}}">Listing</label></div>
-                                <div><input class="setting" value="create" name="setting[]" type="checkbox" id="setting-create.{{user.id}}"> <label for="setting-create.{{user.id}}">Create</label></div>
-                                <div><input class="setting" value="edit" name="setting[]" type="checkbox" id="setting-edit.{{user.id}}"> <label for="setting-edit.{{user.id}}">Edit</label></div>
-                                <div><input class="setting" value="delete" name="setting[]" type="checkbox" id="setting-delete.{{user.id}}"> <label for="setting-delete.{{user.id}}">Delete</label></div> <br/>
-                            </div>
-
-                            <div>
-                                <label class="form-control acl-label">Audit Log</label>  
-                                <div><input class="audit" value="accessLog" name="audit[]" type="checkbox" id="audit-log.{{user.id}}"> <label for="audit-log.{{user.id}}">Access Log</label></div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button class="btn btn-default btn-primary" type="submit" name="submit" value="Submit">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-{% endfor %}{% endfor %}
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
