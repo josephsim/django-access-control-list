@@ -14,6 +14,9 @@ class UserDetail(models.Model):
 class AccessControl(models.Model):
     uid_index = models.ForeignKey(UserDetail, on_delete=models.CASCADE)
     uid_uname = models.CharField(max_length=200, default=None)
+    permissions = models.TextField(default=None, null=True)
+
+    """
     project_mgmt = models.TextField(default=None, null=True)
     engagement_mgmt = models.TextField(default=None, null=True)
     issue_mgmt = models.TextField(default=None, null=True)
@@ -21,59 +24,4 @@ class AccessControl(models.Model):
     reporting_mgmt = models.TextField(default=None, null=True)
     setting = models.TextField(default=None, null=True)
     audit_log  = models.TextField(default=None, null=True)
-
-    """
-    PROJECT_MANAGEMENT = (
-            ('Listing', 'Listing'),
-            ('Create', 'Create'),
-            ('Edit', 'Edit'),
-            ('Delete', 'Delete'),
-    )
-
-    ENGAGEMENT_MANAGEMENT = (
-        ('All Listing', 'All Listing'),
-        ('Listing', 'Listing'),
-        ('Create', 'Create'),
-        ('Edit', 'Edit'),
-        ('Delete', 'Delete'),
-    )
-
-    ISSUE_MANAGEMENT = (
-        ('Listing', 'Listing'),
-        ('Create', 'Create'),
-        ('Edit Detail', 'Edit Detail'),
-        ('Edit Reply', 'Edit Reply'),
-        ('Edit Discussion', 'Edit Discussion'),
-        ('Delete', 'Delete'),
-        ('By Pass', 'By Pass'),
-    )
-
-    USER_MANAGEMENT = (
-        ('Listing', 'Listing'),
-        ('Edit', 'Edit'),
-        ('Delete', 'Delete'),
-    )
-
-    REPORTING_MANAGEMENT = (
-        ('Listing', 'Listing'),
-    )
-
-    SETTING = (
-        ('Listing', 'Listing'),
-        ('Create', 'Create'),
-        ('Edit', 'Edit'),
-        ('Delete', 'Delete'),
-    )
- 
-    AUDIT_LOG = (
-        ('View Log', 'View Log'),
-    )
-    
-    project_mgmt = MultiSelectField(choices = PROJECT_MANAGEMENT, null=True)
-    engagement_mgmt = MultiSelectField(choices = ENGAGEMENT_MANAGEMENT, null=True)
-    issue_mgmt = MultiSelectField(choices = ISSUE_MANAGEMENT, null=True)
-    user_mgmt = MultiSelectField(choices = USER_MANAGEMENT, null=True)
-    reporting_mgmt = MultiSelectField(choices = REPORTING_MANAGEMENT, null=True)
-    setting = MultiSelectField(choices = SETTING, null=True)
-    audit_log = MultiSelectField(choices = AUDIT_LOG, null=True)
     """
