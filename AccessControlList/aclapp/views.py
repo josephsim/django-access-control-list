@@ -4,6 +4,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from .models import UserDetail, AccessControl
 
+from django_auth_ldap.backend import LDAPBackend
+from django.contrib.auth.models import User
+from django.conf import settings
+
 # Display list of users and their details
 def index(request):
     #users = UserDetail.objects.all()
@@ -39,3 +43,44 @@ def submit(request):
         return redirect('/')
     else:
         return render(request, 'index.html')
+
+def login_page(request):
+    return render(request, 'login.html')
+
+def login_user(request):
+
+    #state = ""
+
+    username = settings.AUTH_LDAP_BIND_DN
+    password = settings.AUTH_LDAP_BIND_PASSWORD
+
+    if (request.method == 'POST'):
+        username = request.POST['username']
+        password = request.POST['password']
+
+        print(username)
+
+        auth = LDAPBackend()
+        user = auth.authenticate(request, username=username, password=password)
+
+        if user is not None:
+            print('user is authenticated')
+            return HttpResponse("User authenticated")
+        else:
+            print('User failed to authenticate')
+            return HttpResponse("User authentication failed")
+
+    """
+    try:
+        User = auth.authenticate(username=username,password=password) 
+        if User is not None:
+            state = "Valid"
+
+        else:
+            state = "Invalid"
+
+    except:
+            state = "Error"
+
+    return HttpResponse(state)  
+    """

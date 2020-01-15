@@ -1,0 +1,10 @@
+{% include 'partials/header.html' %}
+
+<form action="{% url 'aclapp:login_user' %}" method="POST">
+    {%csrf_token%}
+    Username: <input type="text" name="username"/>
+    Password: <input type="password" name="password" />
+    <input type="submit" name="submit" value="Log in" />
+</form>
+
+{% include 'partials/footer.html' %}
