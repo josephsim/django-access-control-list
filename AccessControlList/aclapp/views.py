@@ -66,9 +66,12 @@ def login_user(request):
             # Create user if user does not exist previously
             if UserDetail.objects.filter(user_id=username).count() > 0:
                 
+                # Redirect successfully authenticated LDAP user to the ACL home page
+                # TODO: Redirect user to the ACL home page
                 return HttpResponse("User authenticated, " + username + " already exist")
                 
             else:
+                # Create new user for successfully authenticated LDAP user
                 # Set values for new user
                 name = usr.last_name
                 user_id = usr.username
@@ -81,8 +84,11 @@ def login_user(request):
                 UserDetail.objects.create(name=name, user_id=user_id, email=email, section=section, status=status, roles=roles)
                 AccessControl.objects.create(uid_uname=user_id, permissions="")
 
+                # TODO: Redirect user to the ACL home page
                 return HttpResponse("User authenticated, created new user " + username)
                 
         else:
+            # Failed to login using LDAP authentication
+            # TODO: Redirect user back to the login page and show error message
             print('User failed to authenticate')
             return HttpResponse("User authentication failed")
