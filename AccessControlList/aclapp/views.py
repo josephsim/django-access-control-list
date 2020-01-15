@@ -48,39 +48,41 @@ def login_page(request):
     return render(request, 'login.html')
 
 def login_user(request):
-
-    #state = ""
-
-    username = settings.AUTH_LDAP_BIND_DN
-    password = settings.AUTH_LDAP_BIND_PASSWORD
-
     if (request.method == 'POST'):
         username = request.POST['username']
         password = request.POST['password']
 
-        print(username)
-
         auth = LDAPBackend()
         user = auth.authenticate(request, username=username, password=password)
 
+        # Check if user exist in LDAP server
         if user is not None:
             print('user is authenticated')
-            return HttpResponse("User authenticated")
+
+            # Get user objects from auth_user table
+            usr = User.objects.get(username=username)
+
+            # Check if user already exist via username
+            # Create user if user does not exist previously
+            if UserDetail.objects.filter(user_id=username).count() > 0:
+                
+                return HttpResponse("User authenticated, " + username + " already exist")
+                
+            else:
+                # Set values for new user
+                name = usr.last_name
+                user_id = usr.username
+                email = usr.email
+                section = ""
+                status = usr.is_active
+                roles = "Normal User"
+
+                # Create new user to database
+                UserDetail.objects.create(name=name, user_id=user_id, email=email, section=section, status=status, roles=roles)
+                AccessControl.objects.create(uid_uname=user_id, permissions="")
+
+                return HttpResponse("User authenticated, created new user " + username)
+                
         else:
             print('User failed to authenticate')
             return HttpResponse("User authentication failed")
-
-    """
-    try:
-        User = auth.authenticate(username=username,password=password) 
-        if User is not None:
-            state = "Valid"
-
-        else:
-            state = "Invalid"
-
-    except:
-            state = "Error"
-
-    return HttpResponse(state)  
-    """

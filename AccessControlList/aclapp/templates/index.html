@@ -73,6 +73,7 @@
                                     </div>
                                     <div class="col-md-9">
                                         <select class="form-control" name="section" id="section.{{user.id}}">
+                                            {% if user.section == '' %}<option value=""></option>{% endif %}
                                             <option value="CEO's Office" {% if user.section == 'CEO\'s Office' %} selected {% endif %}>CEO's Office</option>
                                             <option value="COO's Office" {% if user.section == 'COO\'s Office' %} selected {% endif %}>COO's Office</option>
                                             <option value="Corporate Transformation & Talent Development (CTD)" {% if user.section == 'Corporate Transformation & Talent Development (CTD)' %} selected {% endif %}>Corporate Transformation & Talent Development (CTD)</option>
