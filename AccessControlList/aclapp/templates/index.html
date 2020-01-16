@@ -1,4 +1,5 @@
 {% include 'partials/header.html' %}
+
     <table class="table table-hover">
         <thead>
             <tr class="table table-default">
@@ -73,7 +74,7 @@
                                     </div>
                                     <div class="col-md-9">
                                         <select class="form-control" name="section" id="section.{{user.id}}">
-                                            {% if user.section == null %}<option value="" selected></option>{% endif %}
+                                            {% if user.section == '' %}<option value="" selected></option>{% endif %}
                                             <option value="CEO's Office" {% if user.section == 'CEO\'s Office' %} selected {% endif %}>CEO's Office</option>
                                             <option value="COO's Office" {% if user.section == 'COO\'s Office' %} selected {% endif %}>COO's Office</option>
                                             <option value="Corporate Transformation & Talent Development (CTD)" {% if user.section == 'Corporate Transformation & Talent Development (CTD)' %} selected {% endif %}>Corporate Transformation & Talent Development (CTD)</option>
@@ -110,7 +111,7 @@
                                     </div>
                                     <div class="col-md-9">
                                         <select class="form-control" name="roles" id="roles.{{user.id}}">
-                                            {% if user.roles == null %} <option value="" selected>  </option> {% endif %}
+                                            {% if user.roles == ''  %} <option value="" selected>  </option> {% endif %}
                                             <option value="Admin" {% if user.roles == 'Admin' %} selected {% endif %}>Admin</option>
                                             <option value="Pentester" {% if user.roles == 'Pentester' %} selected {% endif %}>Pentester</option>
                                             <option value="Normal User" {% if user.roles == 'Normal User' %} selected {% endif %}>Normal User</option>

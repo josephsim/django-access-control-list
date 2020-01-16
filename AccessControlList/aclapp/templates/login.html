@@ -1,10 +1,33 @@
 {% include 'partials/header.html' %}
 
+{% block content%}
 <form action="{% url 'aclapp:login_user' %}" method="POST">
     {%csrf_token%}
-    Username: <input type="text" name="username"/>
-    Password: <input type="password" name="password" />
-    <input type="submit" name="submit" value="Log in" />
+    
+    <div class="row">
+        <div class="col-md-4"></div>
+
+        <div class="col-md-4">
+
+            <h1 class="text-center"> Login Here </h1>
+
+            <br/>
+
+            <div class="form-group">
+				<input type="text" name="username" class="form-control" placeholder="Enter Username" required autofocus> <br/>
+                <input type="password" name="password" class="form-control" placeholder="Enter Password" required autofocus>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+        
+        </div>
+        
+        <div class="col-md-4"></div>
+        
+    </div>
+
 </form>
+{% endblock%}
+
 
 {% include 'partials/footer.html' %}

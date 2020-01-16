@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
-from django.template import loader
+from django.template import loader, RequestContext
 from .models import UserDetail, AccessControl
 
 from django_auth_ldap.backend import LDAPBackend
 from django.contrib.auth.models import User
+from django.contrib.sessions.models import Session
 from django.conf import settings
 
 # Display list of users and their details
@@ -55,22 +56,33 @@ def login_user(request):
         auth = LDAPBackend()
         user = auth.authenticate(request, username=username, password=password)
 
-        # Check if user exist in LDAP server
+        # Check if user can be authenticated in LDAP server
         if user is not None:
-            print('user is authenticated')
+            print(username + " has successfully authenticated on LDAP server")
 
             # Get user objects from auth_user table
             usr = User.objects.get(username=username)
 
-            # Check if user already exist via username
+            # Check if user already exist in UserDetail model
             # Create user if user does not exist previously
             if UserDetail.objects.filter(user_id=username).count() > 0:
                 
+                # Start user session
+                request.session['username'] = username
+                #request.user = username 
+                if User.is_active == True:
+                    print("user is authenticated " + usr.username + usr.first_name + usr.email)
+
+                print("Current session username: " + request.session['username'])
+
                 # Redirect successfully authenticated LDAP user to the ACL home page
                 # TODO: Redirect user to the ACL home page
-                return HttpResponse("User authenticated, " + username + " already exist")
+                #return HttpResponse("User authenticated, " + username + " already exist")
+
+                return index(request)
                 
             else:
+
                 # Create new user for successfully authenticated LDAP user
                 # Set values for new user
                 name = usr.last_name
@@ -84,11 +96,25 @@ def login_user(request):
                 UserDetail.objects.create(name=name, user_id=user_id, email=email, section=section, status=status, roles=roles)
                 AccessControl.objects.create(uid_uname=user_id, permissions="")
 
+                # Start user session
+                request.session['username'] = username
+                #request.user.username() = username
+                print("Current session username:" + request.session['username'])
+
                 # TODO: Redirect user to the ACL home page
+
                 return HttpResponse("User authenticated, created new user " + username)
+                #render(request, 'index.html', context)
                 
         else:
-            # Failed to login using LDAP authentication
+            # Failed to login user using LDAP authentication
             # TODO: Redirect user back to the login page and show error message
             print('User failed to authenticate')
             return HttpResponse("User authentication failed")
+
+def logout_user(request):
+    try:
+        del request.session['username']
+    except KeyError:
+        pass
+    return render(request, 'logout.html')
