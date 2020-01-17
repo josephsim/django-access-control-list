@@ -107,6 +107,11 @@ def login_view(request):
                     # Create new user to database
                     UserDetail.objects.create(name=name, user_id=user_id, email=email, section=section, status=status, roles=roles)
                     AccessControl.objects.create(uid_uname=user_id, permissions="")
+            
+            else:
+                if next:
+                    return redirect(next)
+                return redirect('/')
 
         user = authenticate(username=username, password=password)
         login(request, user)
