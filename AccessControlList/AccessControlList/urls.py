@@ -26,7 +26,6 @@ urlpatterns = [
     path('accounts/login/', login_view),
     path('accounts/logout/', logout_view),
 
-    #path('', include('aclapp.urls')),
     path('aclapp/', include('aclapp.urls')),
     
     path('', include("django.contrib.auth.urls")),

@@ -50,7 +50,8 @@ def submit(request):
 
         # 'permissions' variable for AccessControl model
         permissions = request.POST.getlist('permissions[]')
-                
+        
+        # Located the pre-existed user in the database and update the user's data with the 'POST' data 
         UserDetail.objects.filter(pk=id, user_id=user_id).update(name=name, user_id=user_id, email=email, section=section, status=status, roles=roles)
         AccessControl.objects.filter(uid_uname=user_id).update(permissions=permissions)
 
