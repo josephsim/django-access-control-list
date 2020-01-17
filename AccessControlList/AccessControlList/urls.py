@@ -16,9 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from .views import home
+from aclapp.views import login_view, logout_view
+
 urlpatterns = [
-    path('', include('aclapp.urls')),
-    path('aclapp/', include('aclapp.urls')),
+
     path('admin/', admin.site.urls),
+    path('', home),
+    path('accounts/login/', login_view),
+    path('accounts/logout/', logout_view),
+
+    #path('', include('aclapp.urls')),
+    path('aclapp/', include('aclapp.urls')),
+    
     path('', include("django.contrib.auth.urls")),
 ]
