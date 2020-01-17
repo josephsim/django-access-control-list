@@ -59,6 +59,7 @@ def submit(request):
     else:
         return render(request, '/aclapp')
 
+# Login function
 def login_view(request):
     next = request.GET.get('next')
     form = UserLoginForm(request.POST or None)
@@ -71,6 +72,7 @@ def login_view(request):
             username = request.POST['username']
             password = request.POST['password']
 
+            # Authenticate user on LDAP server
             auth = LDAPBackend()
             ldapuser = auth.authenticate(request, username=username, password=password)
 
@@ -84,16 +86,15 @@ def login_view(request):
                 # Check if user already exist in UserDetail model
                 # Create user if user does not exist previously
                 if UserDetail.objects.filter(user_id=username).count() > 0:
-                
+
                     if User.is_active == True:
-                        print("user is authenticated " + usr.username + usr.first_name + usr.email)
+                        print("user is authenticated " + usr.username + " " + usr.first_name + " " + usr.email)
+                    pass
 
-
-                    # Redirect successfully authenticated LDAP user to the ACL home page
-                    # TODO: Redirect user to the ACL home page
-                    #return HttpResponse("User authenticated, " + username + " already exist")
-                    
                 else:
+
+                    if User.is_active == True:
+                        print("user is authenticated " + usr.username + " " + usr.first_name + " " + usr.email)
 
                     # Create new user for successfully authenticated LDAP user
                     # Set values for new user
@@ -109,12 +110,15 @@ def login_view(request):
                     AccessControl.objects.create(uid_uname=user_id, permissions="")
             
             else:
+                # User will be redirect back to the login page if LDAP authentication failed
                 if next:
                     return redirect(next)
                 return redirect('/')
 
+        # Authenticate user on Django and login user
         user = authenticate(username=username, password=password)
         login(request, user)
+
         if next:
             return redirect(next)
         return redirect('/')
@@ -124,6 +128,7 @@ def login_view(request):
     }
     return render(request, "login.html", context)
 
+# Logout function
 def logout_view(request):
     logout(request)
     return redirect('/')
